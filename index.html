@@ -320,6 +320,11 @@ footer .lema{color:rgba(255,248,238,.8);margin-top:10px}
   background:url(sobre/f00.jpg) center / cover no-repeat}
 /* El sobre queda pausado debajo de la camilla, que lo tapa por completo. No se quita ni se descarga: hacerlo provoca un parpadeo en teléfonos. */
 .portada.lista .v-sobre{visibility:hidden}
+/* El sobre y la luz cubren toda la pantalla visible, incluso cuando el navegador esconde sus barras (pantalla "grande") */
+@supports (height:100lvh){
+  .escena, .v-sobre{min-height:100lvh}
+  .saludo{height:100lvh;padding-bottom:calc(5svh + 100lvh - 100svh)}
+}
 
 /* La camilla se ve completa, a todo el ancho, sin recortes ni velos encima.
    .ventana ocupa la franja del video donde están las personas (del 26.5% al 78.5% de su alto).
@@ -524,13 +529,13 @@ html.intro .seguir-hilo::after{animation-play-state:paused}
      Abajo se funde con el dorado, donde siguen el logo y las cifras. (La letra y el sitio del título quedan para después.) */
   /* --alto: el alto de la toma. Nunca más que el alto propio del video (16:9) a todo el ancho, así el video se ve completo,
      de lado a lado, sin ampliarse. Solo en ventanas más anchas que 16:9 se recorta un poco de fondo arriba y abajo. */
-  .portada{--alto:min(100svh, 56.25vw);padding-top:calc(env(safe-area-inset-top,0px) + var(--navh) + 24px);background:#B38953}
-  .escena{background:linear-gradient(180deg, #B48A56 0, #B48A56 var(--alto), #BE9860 calc(var(--alto) + 30%), #C9A56A 100%)}
-  .portada-contenido{position:static;justify-content:center;gap:30px;min-height:calc(var(--alto) - var(--navh) - 24px)}
-  .ventana{position:absolute;inset:auto;left:0;top:0;width:100%;height:var(--alto);z-index:0;margin:0;aspect-ratio:auto}
-  .v-camilla{left:0;top:0;width:100%;height:100%;object-position:50% 50%;
-    -webkit-mask-image:linear-gradient(180deg, #000 0, #000 80%, rgba(0,0,0,.5) 92%, transparent 100%);
-    mask-image:linear-gradient(180deg, #000 0, #000 80%, rgba(0,0,0,.5) 92%, transparent 100%)}
+  /* El hero llena la primera pantalla completa, igual que el sobre. La toma se ajusta para cubrirla entera y se ancla
+     hacia la izquierda, donde están Drabarni y la clienta, para que nunca queden fuera. Lo que sigue empieza debajo. */
+  .portada{padding-top:calc(env(safe-area-inset-top,0px) + var(--navh) + 24px);background:#B38953}
+  .escena{background:linear-gradient(180deg, #B48A56 0, #B48A56 100svh, #BE9860 calc(100svh + 30%), #C9A56A 100%)}
+  .portada-contenido{position:static;justify-content:center;gap:30px;min-height:calc(100svh - var(--navh) - 24px)}
+  .ventana{position:absolute;inset:auto;left:0;top:0;width:100%;height:100svh;z-index:0;margin:0;aspect-ratio:auto}
+  .v-camilla{left:0;top:0;width:100%;height:100%;object-position:22% 50%;-webkit-mask-image:none;mask-image:none}
   .borde{display:none}
   .p-arriba{height:auto}
   /* La frase va entera, junta, a la derecha: grande, ocupando la sábana de la camilla */
@@ -542,8 +547,18 @@ html.intro .seguir-hilo::after{animation-play-state:paused}
   .p-arriba,.p-abajo{max-width:34rem}
   /* El sobre horizontal llena la pantalla */
   .v-sobre{height:100svh;background-image:url(sobre-h/f00.jpg)}
+  .p-abajo{position:absolute;left:0;right:0;top:calc(100svh - 96px);max-width:none;margin:0}
+  .p-abajo .seguir{margin:0 auto}
   .saludo .oro::after{background-image:linear-gradient(180deg, rgba(58,34,10,calc(var(--velo) + .16)) 0%, rgba(58,34,10,var(--velo)) 30%, rgba(58,34,10,var(--velo)) 100%), url(camilla-h-poster-2.jpg)}
 }
+
+/* En ventanas más cuadradas la toma se recorta por la derecha: la frase se recoge un poco para seguir sobre la sábana */
+@media (min-width:960px) and (max-aspect-ratio:3/2){
+  .ventana .frase{left:47%;width:52%;font-size:min(4.8vw, 9.8svh)}
+}
+/* Lo que sigue a la portada (logo, estrellas y cifras) no se asoma durante la entrada: aparece después, con suavidad */
+.portada-pie{transition:opacity 1s ease .5s}
+html.intro .portada-pie{opacity:0;transition:none}
 
 /* El texto de la portada aparece línea por línea después del enfoque */
 .linea{transition:opacity .7s var(--ease), transform .7s var(--ease);transition-delay:calc(var(--i,0) * 110ms)}
