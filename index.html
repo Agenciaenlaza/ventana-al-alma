@@ -1873,6 +1873,19 @@ if (!(location.hash && location.hash !== '#inicio')) {
   const ancha = matchMedia('(min-width: 960px)').matches;
   const fuente = v => (ancha && v.dataset.h) ? v.dataset.h : v.dataset.v;
 
+  // Las barras del navegador (arriba y abajo en el teléfono) toman el color de fondo de la página: mientras se ve la portada
+  // llevan su dorado, para que no queden como dos franjas claras; al pasar a lo que sigue vuelven al tono de la página.
+  let tema = document.querySelector('meta[name="theme-color"]');
+  if (!tema) { tema = document.createElement('meta'); tema.name = 'theme-color'; document.head.appendChild(tema); }
+  const temaBase = tema.getAttribute('content') || '';
+  let enOro = null;
+  const barras = () => {
+    const oro = sec.getBoundingClientRect().bottom > innerHeight * .5;
+    if (oro === enOro) return; enOro = oro;
+    document.body.style.backgroundColor = oro ? '#BE9661' : '';
+    if (oro) tema.setAttribute('content', '#BE9661'); else if (temaBase) tema.setAttribute('content', temaBase); else tema.removeAttribute('content');
+  };
+  barras(); addEventListener('scroll', barras, {passive: true}); addEventListener('resize', barras);
   const invita = document.getElementById('seguir');   // la invitación a bajar se desvanece al empezar a bajar
   addEventListener('scroll', () => invita.classList.toggle('ido', scrollY > 40), {passive: true});
   // En pantalla ancha va la toma horizontal. Mientras no exista su video, queda su foto fija (no se carga el vertical).
