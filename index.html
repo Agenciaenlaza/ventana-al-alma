@@ -1877,13 +1877,18 @@ if (!(location.hash && location.hash !== '#inicio')) {
   // llevan su dorado, para que no queden como dos franjas claras; al pasar a lo que sigue vuelven al tono de la página.
   let tema = document.querySelector('meta[name="theme-color"]');
   if (!tema) { tema = document.createElement('meta'); tema.name = 'theme-color'; document.head.appendChild(tema); }
-  const temaBase = tema.getAttribute('content') || '';
+  // La barra de arriba se queda clara: lo indica el color de tema y un filo claro, fijo, pegado al borde de arriba
+  // (el navegador toma de ahí el tono de esa barra). La de abajo sigue el dorado del fondo.
+  tema.setAttribute('content', '#F3EADF');
+  const filo = document.createElement('div'); filo.setAttribute('aria-hidden', 'true');
+  filo.style.cssText = 'position:fixed;left:0;right:0;top:0;height:4px;background-color:#F3EADF;z-index:2147483000;pointer-events:none;display:none';
+  document.body.appendChild(filo);
   let enOro = null;
   const barras = () => {
     const oro = sec.getBoundingClientRect().bottom > innerHeight * .5;
     if (oro === enOro) return; enOro = oro;
     document.body.style.backgroundColor = oro ? '#BE9661' : '';
-    if (oro) tema.setAttribute('content', '#BE9661'); else if (temaBase) tema.setAttribute('content', temaBase); else tema.removeAttribute('content');
+    filo.style.display = (oro && !ancha) ? 'block' : 'none';
   };
   barras(); addEventListener('scroll', barras, {passive: true}); addEventListener('resize', barras);
   const invita = document.getElementById('seguir');   // la invitación a bajar se desvanece al empezar a bajar
