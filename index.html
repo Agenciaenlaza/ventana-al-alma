@@ -305,7 +305,7 @@ footer .lema{color:rgba(255,248,238,.8);margin-top:10px}
 @media (min-width:960px){ .barra{display:none} }
 
 @media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  *:not(.saludo):not(.saludo *):not(.ventana):not(.linea):not(.nav):not(.portada-pie),*:not(.saludo):not(.saludo *):not(.ventana):not(.linea):not(.nav):not(.portada-pie)::before,*:not(.saludo):not(.saludo *):not(.ventana):not(.linea):not(.nav):not(.portada-pie)::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
 }
 
@@ -1322,8 +1322,9 @@ html:not(.intro) .saltar, html.enfocando .saltar{opacity:0;pointer-events:none}
 </style>
 
 <script>
-/* El sobre se muestra al entrar por la portada. Se omite con movimiento reducido o si se llega a un ancla. */
-if (!matchMedia('(prefers-reduced-motion: reduce)').matches && !(location.hash && location.hash !== '#inicio')) {
+/* El sobre se muestra siempre al entrar por la portada (también con "Reducir movimiento" activado: es la bienvenida del sitio
+   y se puede saltar con un toque). Solo se omite si se llega directo a un ancla de la página. */
+if (!(location.hash && location.hash !== '#inicio')) {
   document.documentElement.classList.add('intro');
   try { history.scrollRestoration = 'manual'; } catch (e) {}
   /* El sobre es una secuencia de fotos que la página misma va pasando. No depende de que el teléfono
