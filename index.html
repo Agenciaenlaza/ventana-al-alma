@@ -558,8 +558,8 @@ html.intro .seguir-hilo::after{animation-play-state:paused}
 }
 /* La portada es más larga: el logo, las estrellas y las cifras empiezan bastante más abajo, así al entrar solo se ve
    la toma y su "Desliza", también cuando el navegador esconde sus barras y deja ver un poco más de página. */
-.portada-pie{margin-top:24svh}
-@supports (height:100lvh){ .portada-pie{margin-top:calc(100lvh - 100svh + 15svh)} }
+.portada-pie{margin-top:13svh}
+@supports (height:100lvh){ .portada-pie{margin-top:calc(100lvh - 100svh + 4svh)} }
 .borde{height:210vh}
 /* Lo que sigue a la portada (logo, estrellas y cifras) no se asoma durante la entrada: aparece después, con suavidad */
 .portada-pie{transition:opacity 1s ease .5s}
