@@ -533,10 +533,22 @@ html.intro .seguir-hilo::after{animation-play-state:paused}
      hacia la izquierda, donde están Drabarni y la clienta, para que nunca queden fuera. Lo que sigue empieza debajo. */
   .portada{padding-top:calc(env(safe-area-inset-top,0px) + var(--navh) + 24px);background:#B38953}
   .escena{background:linear-gradient(180deg, #B48A56 0, #B48A56 100svh, #BE9860 calc(100svh + 30%), #C9A56A 100%)}
-  .portada-contenido{position:static;justify-content:center;gap:30px;min-height:calc(100svh - var(--navh) - 24px)}
-  .ventana{position:absolute;inset:auto;left:0;top:0;width:100%;height:100svh;z-index:0;margin:0;aspect-ratio:auto}
-  .v-camilla{left:0;top:0;width:100%;height:100%;object-position:22% 50%;-webkit-mask-image:none;mask-image:none}
-  .borde{display:none}
+  .portada-contenido{position:static;justify-content:center;gap:30px;min-height:calc(max(100svh, 56.25vw) - var(--navh) - 24px)}
+  /* La toma va en su tamaño real, de lado a lado y sin ampliarse: su alto es el del video (16:9), nunca más que la pantalla.
+     Si la ventana es más alta, lo que queda de la primera pantalla lo llena el mismo piso de la toma, que continúa debajo. */
+  .ventana{position:absolute;inset:auto;left:0;top:0;width:100%;height:56.25vw;z-index:0;margin:0;aspect-ratio:auto}
+  /* El borde de abajo de la toma se funde con la franja que la continúa: sin línea de corte */
+  .v-camilla{left:0;top:0;width:100%;height:100%;object-position:22% 50%;-webkit-mask-image:linear-gradient(180deg, #000 0, #000 92%, transparent 100%);mask-image:linear-gradient(180deg, #000 0, #000 92%, transparent 100%)}
+  /* La segunda sección tiene el mismo fondo que la toma: bajo el video sigue su propio piso, con los colores de su última
+     fila (leídos del video, columna por columna, con el mismo encuadre), y hacia abajo se va abriendo, con suavidad, al dorado claro. */
+  .borde.a{display:none}
+  .borde.b{top:88%;height:calc(12% + 80svh);
+    background:var(--borde-b, linear-gradient(90deg, rgb(185,143,95) 0%, rgb(193,151,103) 5%, rgb(172,130,82) 10%, rgb(141,99,51) 15%, rgb(142,100,52) 20%, rgb(141,99,51) 25%, rgb(142,99,51) 30%, rgb(144,98,54) 35%, rgb(151,106,62) 40%, rgb(160,118,71) 45%, rgb(160,116,72) 50%, rgb(158,115,71) 55%, rgb(158,115,70) 60%, rgb(161,117,73) 65%, rgb(162,118,74) 70%, rgb(161,118,73) 75%, rgb(160,118,70) 80%, rgb(157,115,68) 85%, rgb(154,111,68) 90%, rgb(151,108,65) 95%, rgb(150,107,64) 100%)) 22% 0 / max(100%, 177.78svh) 100% no-repeat;
+    -webkit-mask-image:linear-gradient(180deg, #000 0, #000 15%, rgba(0,0,0,.9) 26%, rgba(0,0,0,.7) 40%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.22) 70%, rgba(0,0,0,.07) 85%, transparent 100%);mask-image:linear-gradient(180deg, #000 0, #000 15%, rgba(0,0,0,.9) 26%, rgba(0,0,0,.7) 40%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.22) 70%, rgba(0,0,0,.07) 85%, transparent 100%)}
+  .borde.b::after{display:none}
+  /* Una luz cálida detrás del logo y las cifras, como en el teléfono */
+  .portada-pie::before{content:"";position:absolute;z-index:-1;left:-6%;right:-6%;top:-70px;bottom:-40px;pointer-events:none;
+    background:radial-gradient(46% 58% at 50% 46%, rgba(255,236,196,.2) 0%, rgba(255,236,196,.08) 45%, rgba(255,236,196,0) 72%)}
   .p-arriba{height:auto}
   /* La frase va entera, junta, a la derecha: grande, ocupando la sábana de la camilla */
   .ventana .frase{left:41%;top:0;width:58%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -554,7 +566,6 @@ html.intro .seguir-hilo::after{animation-play-state:paused}
 
 /* En ventanas más cuadradas la toma se recorta por la derecha: la frase se recoge un poco para seguir sobre la sábana */
 @media (min-width:960px) and (max-aspect-ratio:3/2){
-  .ventana .frase{left:47%;width:52%;font-size:min(4.8vw, 9.8svh)}
 }
 /* La portada es más larga: el logo, las estrellas y las cifras empiezan bastante más abajo, así al entrar solo se ve
    la toma y su "Desliza", también cuando el navegador esconde sus barras y deja ver un poco más de página. */
@@ -1870,6 +1881,22 @@ if (!(location.hash && location.hash !== '#inicio')) {
   // El fondo de la portada continúa los colores de los bordes del video, leídos del propio video.
   const pintarBordes = () => {
     try {
+      if (ancha) {   // computadora: la franja bajo la toma sigue los colores de la última fila del video que se ve
+        const c = document.createElement('canvas'); c.width = 160; c.height = 90;
+        const x = c.getContext('2d'); x.drawImage(vc, 0, 0, 160, 90);
+        const caja = vc.getBoundingClientRect();
+        const visto = caja.width ? Math.min(1, (caja.height / caja.width) / (9 / 16)) : 1;   // parte del alto del cuadro que queda a la vista
+        const y = Math.max(0, Math.min(88, Math.floor((.5 + .5 * visto) * 90) - 2));
+        const d = x.getImageData(0, y, 160, 2).data, st = [];
+        for (let i = 0; i <= 20; i++) {
+          const px = Math.round(i * 159 / 20); let r = 0, g = 0, b = 0, n = 0;
+          for (let f = 0; f < 2; f++) for (let q = Math.max(0, px - 2); q <= Math.min(159, px + 2); q++) { const k = (f * 160 + q) * 4; r += d[k]; g += d[k + 1]; b += d[k + 2]; n++; }
+          st.push(`rgb(${Math.round(r / n)},${Math.round(g / n)},${Math.round(b / n)}) ${i * 5}%`);
+        }
+        const franja = `linear-gradient(90deg, ${st.join(', ')})`;
+        if (!/rgb\(0,0,0\) 50%/.test(franja)) sec.style.setProperty('--borde-b', franja);
+        return;
+      }
       const c = document.createElement('canvas'); c.width = 64; c.height = 114;
       const x = c.getContext('2d'); x.drawImage(vc, 0, 0, 64, 114);
       const fila = y => {
@@ -1886,6 +1913,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
     } catch (e) {}
   };
   if (vc.readyState >= 2) pintarBordes(); else vc.addEventListener('loadeddata', pintarBordes, {once: true});
+  if (ancha) { let espera = 0; addEventListener('resize', () => { clearTimeout(espera); espera = setTimeout(() => { if (vc.readyState >= 2) pintarBordes(); }, 160); }); }
   // Si el teléfono no deja que la camilla se mueva sola (batería baja), empieza a moverse con el primer toque.
   const despierta = () => { if (vc.paused && !html.classList.contains('intro')) vc.play().catch(() => {}); };
   ['touchend', 'click', 'pointerdown', 'keydown'].forEach(e => addEventListener(e, despierta, {passive: true}));
@@ -2016,7 +2044,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
   const lugar = el => { let x = 0, y = 0; for (let e = el; e && e !== sec; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return [x, y]; };
   const alinear = () => {
     const ancha = matchMedia('(min-width:960px)').matches;
-    const W = ancha ? sec.offsetWidth : vc.offsetWidth, H = ancha ? innerHeight : vc.offsetHeight;
+    const W = ancha ? sec.offsetWidth : vc.offsetWidth, H = ancha ? W * 9 / 16 : vc.offsetHeight;
     if (!W || !H) return;
     const [vx, vy] = ancha ? [0, 0] : lugar(vc), iw = ancha ? 1920 : (vc.videoWidth || 1080), ih = ancha ? 1080 : (vc.videoHeight || 1920);
     const k = Math.max(W / iw, H / ih), dw = iw * k, dh = ih * k;      // igual que object-fit: cover
@@ -2060,7 +2088,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
   };
   const pintar = () => {
     const ancha = matchMedia('(min-width:960px)').matches;
-    const W = ancha ? sec.offsetWidth : vc.offsetWidth, H = ancha ? innerHeight : vc.offsetHeight;
+    const W = ancha ? sec.offsetWidth : vc.offsetWidth, H = ancha ? W * 9 / 16 : vc.offsetHeight;
     if (!W || !H) return;
     medir();
     const [vx, vy] = ancha ? [0, 0] : lugar(vc), iw = foto.naturalWidth || (ancha ? 1920 : 1080), ih = foto.naturalHeight || (ancha ? 1080 : 1920);
