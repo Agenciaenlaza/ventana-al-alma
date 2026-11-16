@@ -1162,11 +1162,11 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
    con impulso; al tocar un recorte, crece hasta abrirse completo. Sin script quedan en fila para deslizar. */
 .t-resena .r-pie{display:none}
 .testimonios{overflow-x:clip}
-.t-carril.aro{display:block;position:relative;overflow:visible;height:372px;margin:30px 0 0;padding:0;scroll-snap-type:none;
+.t-carril.aro{display:block;position:relative;overflow:visible;height:266px;margin:30px 0 0;padding:0;scroll-snap-type:none;
   perspective:880px;touch-action:pan-y;cursor:grab;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 .t-carril.aro.arrastrando{cursor:grabbing}
 .t-carril.aro .aro-giro{position:absolute;left:50%;top:0;width:0;height:100%;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;will-change:transform}
-.t-carril.aro .t-nota.t-resena{--w:min(60vw, 250px);position:absolute;left:calc(var(--w) / -2);top:14px;width:var(--w);height:calc(var(--w) * 1.5);flex:none;margin:0;
+.t-carril.aro .t-nota.t-resena{--w:min(53vw, 220px);position:absolute;left:calc(var(--w) / -2);top:14px;width:var(--w);height:calc(var(--w) * 1.18);flex:none;margin:0;
   padding:22px 20px 0;display:block;text-align:left;border-radius:12px;cursor:pointer;overflow:hidden;isolation:isolate;
   background:radial-gradient(120% 60% at 18% 0%, rgba(255,246,214,.75), rgba(255,246,214,0) 62%), linear-gradient(170deg, #EDD69A 0%, #D6B062 40%, #C39A49 72%, #B38953 100%);
   box-shadow:inset 0 1px 0 rgba(255,250,228,.95), inset 0 0 0 1px rgba(255,238,196,.3), 0 2px 0 #9A7430, 0 26px 34px -18px rgba(28,40,48,.8);
@@ -1179,7 +1179,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .t-carril.aro .r-quien{padding:0;font-size:.78rem;line-height:1.2}
 .t-carril.aro .r-rec{display:none}
 .t-carril.aro .r-fecha{margin-top:1px;font-size:.64rem}
-.t-carril.aro .r-texto{margin-top:9px;font-size:.78rem;line-height:1.38;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:10;overflow:hidden}
+.t-carril.aro .r-texto{margin-top:9px;font-size:.78rem;line-height:1.38;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
 .t-carril.aro .r-pie{display:block;position:absolute;left:14px;right:14px;bottom:0;height:52px;line-height:50px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   font-family:"Libre Baskerville", Baskerville, Georgia, serif;font-style:italic;font-weight:700;font-size:.84rem;
   color:#FFFBF0;text-shadow:0 1px 0 rgba(110,76,24,.6), 0 2px 6px rgba(110,76,24,.3)}
@@ -1323,6 +1323,14 @@ footer .lema{display:none}
 .menu-btn.trazos:hover span, .menu-btn.trazos:focus-visible span{width:28px}
 .nav.vidrio .menu-btn.trazos{color:var(--cafe)}
 .nav.vidrio .menu-btn.trazos span{box-shadow:none}
+/* Teléfono: al deslizar no queda franja ni logo acompañando el recorrido; solo el botón del menú */
+@media (max-width:959px){
+  .nav.vidrio{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;pointer-events:none}
+  .nav .logo{transition:opacity .35s var(--ease), visibility .35s}
+  .nav.vidrio .logo{opacity:0;visibility:hidden;pointer-events:none}
+  .nav.vidrio .menu-btn{pointer-events:auto}
+  .nav.vidrio .menu-btn.trazos{opacity:.8}
+}
 .menu-btn.equis span{position:absolute;left:50%;top:50%;width:26px;height:1.5px;margin:-.75px 0 0 -13px;border-radius:2px;background:var(--cafe)}
 .menu-btn.equis span:first-child{transform:rotate(45deg)}
 .menu-btn.equis span:last-child{transform:rotate(-45deg)}
@@ -1873,24 +1881,8 @@ if (!(location.hash && location.hash !== '#inicio')) {
   const ancha = matchMedia('(min-width: 960px)').matches;
   const fuente = v => (ancha && v.dataset.h) ? v.dataset.h : v.dataset.v;
 
-  // Las barras del navegador (arriba y abajo en el teléfono) toman el color de fondo de la página: mientras se ve la portada
-  // llevan su dorado, para que no queden como dos franjas claras; al pasar a lo que sigue vuelven al tono de la página.
-  let tema = document.querySelector('meta[name="theme-color"]');
-  if (!tema) { tema = document.createElement('meta'); tema.name = 'theme-color'; document.head.appendChild(tema); }
-  // La barra de arriba se queda clara: lo indica el color de tema y un filo claro, fijo, pegado al borde de arriba
-  // (el navegador toma de ahí el tono de esa barra). La de abajo sigue el dorado del fondo.
-  tema.setAttribute('content', '#F3EADF');
-  const filo = document.createElement('div'); filo.setAttribute('aria-hidden', 'true');
-  filo.style.cssText = 'position:fixed;left:0;right:0;top:0;height:4px;background-color:#F3EADF;z-index:2147483000;pointer-events:none;display:none';
-  document.body.appendChild(filo);
-  let enOro = null;
-  const barras = () => {
-    const oro = sec.getBoundingClientRect().bottom > innerHeight * .5;
-    if (oro === enOro) return; enOro = oro;
-    document.body.style.backgroundColor = oro ? '#BE9661' : '';
-    filo.style.display = (oro && !ancha) ? 'block' : 'none';
-  };
-  barras(); addEventListener('scroll', barras, {passive: true}); addEventListener('resize', barras);
+  // Las barras del navegador quedan claras, con el tono de la página (sin línea ni franja dorada arriba)
+  { const tema = document.querySelector('meta[name="theme-color"]'); if (tema) tema.setAttribute('content', '#F3EADF'); }
   const invita = document.getElementById('seguir');   // la invitación a bajar se desvanece al empezar a bajar
   addEventListener('scroll', () => invita.classList.toggle('ido', scrollY > 40), {passive: true});
   // En pantalla ancha va la toma horizontal. Mientras no exista su video, queda su foto fija (no se carga el vertical).
