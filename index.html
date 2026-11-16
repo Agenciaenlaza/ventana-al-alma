@@ -304,7 +304,7 @@ footer .lema{color:rgba(255,248,238,.8);margin-top:10px}
 .barra .cupo{font-size:.88rem;color:var(--cafe)}
 @media (min-width:960px){ .barra{display:none} }
 
-@media (prefers-reduced-motion: reduce){
+@media not all{
   *:not(.saludo):not(.saludo *):not(.ventana):not(.linea):not(.nav):not(.portada-pie),*:not(.saludo):not(.saludo *):not(.ventana):not(.linea):not(.nav):not(.portada-pie)::before,*:not(.saludo):not(.saludo *):not(.ventana):not(.linea):not(.nav):not(.portada-pie)::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
   html{scroll-behavior:auto}
 }
@@ -387,8 +387,8 @@ html.intro.enfocando:not(.abre) .ventana{transform:scale(1.05)}
   animation:suelta-luz 9s ease-in-out infinite}
 .logo-grande .lg-comilla{font-style:normal;font-weight:700;font-size:1.55em;line-height:0;vertical-align:-.22em;margin:0 .05em;
   background-image:linear-gradient(180deg, #FFF3CC 0%, #F2C566 60%, #D49B3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
-@media (prefers-reduced-motion: reduce){ .logo-grande .lg-lema{animation:none;background-position:50% 0} }
-@media (prefers-reduced-motion: reduce){ .logo-grande .lg-brillo{display:none} }
+@media not all{ .logo-grande .lg-lema{animation:none;background-position:50% 0} }
+@media not all{ .logo-grande .lg-brillo{display:none} }
 /* ---------- Todos los botones del sitio: cristal ----------
    Translúcidos sobre lo que tengan detrás, con un borde fino y una luz mate que les da la vuelta sin parar.
    Dos tonos según el fondo: sobre fondos claros (crema, arena), cristal dorado con letra terracota;
@@ -418,7 +418,7 @@ html.intro.enfocando:not(.abre) .ventana{transform:scale(1.05)}
 .b-trazo .b-nucleo{stroke:var(--v-nucleo)}
 .flecha .b-trazo .b-luz{animation-duration:4.2s}
 .flecha > svg:not(.b-trazo){position:relative}
-@media (prefers-reduced-motion: reduce){ .b-trazo .b-luz{display:none} }
+@media not all{ .b-trazo .b-luz{display:none} }
 .portada-pie .confianza.clara{margin:0;text-shadow:0 1px 1px rgba(86,54,22,.45), 0 2px 12px rgba(86,54,22,.35)}
 .p-arriba,.p-abajo{position:relative;z-index:2}
 .portada h1{margin:10px 0 0}
@@ -706,7 +706,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 @keyframes paz-nacar{0%,100%{background-position:0% 0}50%{background-position:100% 0}}
 @keyframes paz-respira{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
 @keyframes paz-halo{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
-@media (prefers-reduced-motion: reduce){ .giro .palabra-soltar span, .giro .palabra-paz span, .giro .palabra-paz::before{animation:none} }
+@media not all{ .giro .palabra-soltar span, .giro .palabra-paz span, .giro .palabra-paz::before{animation:none} }
 
 /* ---------- "Porque mereces…": cada frase, protagonista de su tarjeta ----------
    Centrada, a tamaño de titular, con aire alrededor. Los colores de tarjeta y de texto están medidos para contraste AA
@@ -749,7 +749,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .carta-m[data-pos="0"] > p{animation:frase-m .85s cubic-bezier(.22,.61,.36,1) both}
 .carta-m[data-pos="0"] .cta-m{animation:frase-m .85s cubic-bezier(.22,.61,.36,1) .2s both}
 @keyframes frase-m{from{opacity:0;filter:blur(6px);transform:translateY(8px)}to{opacity:1;filter:blur(0);transform:none}}
-@media (prefers-reduced-motion: reduce){ .carta-m[data-pos="0"] > p, .carta-m[data-pos="0"] .cta-m{animation:none} }
+@media not all{ .carta-m[data-pos="0"] > p, .carta-m[data-pos="0"] .cta-m{animation:none} }
 /* Un solo Reservar a la vista: el del encabezado se retira mientras el de la última tarjeta está en pantalla */
 .nav .nav-reservar{transition:opacity .3s var(--ease), visibility .3s}
 .nav.sin-reservar .nav-reservar{opacity:0;visibility:hidden;pointer-events:none}
@@ -809,7 +809,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .escucha.e-entra .e-intro{transition-delay:.95s}
 .escucha.e-entra .e-rueda{opacity:1;transition:opacity .9s ease 1.4s}
 .escucha.e-entra .e-cierre{transition-delay:1.8s}
-@media (prefers-reduced-motion: reduce){
+@media not all{
   .escucha .e-rueda{gap:6px}
   .escucha .e-voz{grid-area:auto;animation:none;opacity:1}
   .escucha .e-rueda::after{display:none}
@@ -854,7 +854,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .marco-sesion .m-luces{filter:drop-shadow(0 0 5px rgba(255,232,170,.95)) drop-shadow(0 0 13px rgba(232,194,122,.65))}
 .marco-sesion .m-luz{animation:m-vuelta 12s linear infinite}
 @keyframes m-vuelta{from{stroke-dashoffset:var(--d0)}to{stroke-dashoffset:calc(var(--d0) - var(--per, 3000) * 1px)}}
-@media (prefers-reduced-motion: reduce){ .marco-sesion .m-luces{display:none} }
+@media not all{ .marco-sesion .m-luces{display:none} }
 /* El camino de la sesión dentro del marco.
    Cada etapa (Cuerpo, Energía, Conciencia) tiene su propio recuadro, con el mismo contorno de oro del marco grande.
    Por el borde izquierdo baja un hilo: es la continuación del que cuelga de "En cabina…". Al deslizar, la luz de ese hilo
@@ -924,8 +924,8 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .ruta.prepara .guia-paso.encendida .gp-luz{animation-play-state:running}
 @keyframes caja-halo{0%{opacity:0}32%{opacity:.9}100%{opacity:.5}}
 @keyframes caja-franja{0%{opacity:0;background-position:140% 0}20%{opacity:.85}100%{opacity:0;background-position:-40% 0}}
-@media (prefers-reduced-motion: reduce){ .marco-sesion .ruta .estacion::before{animation:none !important} .guia-paso .gp-luz{display:none} }
-@media (prefers-reduced-motion: reduce){ .glifo *{animation:none !important} .glifo .g-aro{opacity:.6} }
+@media not all{ .marco-sesion .ruta .estacion::before{animation:none !important} .guia-paso .gp-luz{display:none} }
+@media not all{ .glifo *{animation:none !important} .glifo .g-aro{opacity:.6} }
 /* Mayormente oro; el acento de cada nombre aparece al final de su degradado: terracota, azul y azul hondo */
 /* La práctica de respiración: la última parada, sin caja, separada por una línea fina de oro */
 /* La práctica de respiración va aparte, en su propio marco, separada del de las etapas */
@@ -1059,7 +1059,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .glifo .g-sube{fill:currentColor;animation:g-sube 3.2s ease-out infinite}
 .glifo .g-sube2{animation-delay:1.6s}
 @keyframes g-sube{0%{transform:translateY(9px);opacity:0}22%{opacity:.95}100%{transform:translateY(-15px);opacity:0}}
-@media (prefers-reduced-motion: reduce){ .glifo .g-sube2{display:none} }
+@media not all{ .glifo .g-sube2{display:none} }
 /* La sección dorada "Así se vive una sesión conmigo" ya no se muestra: su contenido vive ahora aquí arriba */
 .sesion{display:none}
 .tlt{margin-top:40px;color:#FFFCF4;text-shadow:0 1px 1px rgba(86,54,22,.6), 0 2px 10px rgba(86,54,22,.35)}
@@ -1223,7 +1223,7 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
 .t-visor .t-visor-nav{display:flex;gap:22px}
 .t-visor .flecha{color:#FFFBF1;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.14);box-shadow:none}
 html.con-visor{overflow:hidden}
-@media (prefers-reduced-motion: reduce){ .t-visor, .t-visor .t-visor-arriba, .t-visor .t-visor-nav{transition:none} }
+@media not all{ .t-visor, .t-visor .t-visor-arriba, .t-visor .t-visor-nav{transition:none} }
 /* (Versión anterior con capturas en imagen; ya no se usa) */
 .t-nota.t-captura{flex-basis:min(90%, 400px);align-self:center;justify-content:center;padding:12px 8px;background:#FFFFFF}
 .t-nota.t-captura img{display:block;width:100%;height:auto;border-radius:10px}
@@ -1647,7 +1647,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
       (() => {
         const tlt = document.getElementById('terapia'), disc = document.getElementById('disciplinas');
         if (!tlt || !disc) return;
-        const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const quieto = matchMedia('not all').matches;
         const fichas = [...disc.querySelectorAll('.disc-ficha')], hojas = [...disc.querySelectorAll('.disc-hoja')];
         const ESPERA = 5200; let actual = 0, reloj = 0, manual = false, aLaVista = false;
         disc.style.setProperty('--disc-t', ESPERA + 'ms');
@@ -1806,7 +1806,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
 <script>
 (() => {
   const $ = id => document.getElementById(id);
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('not all').matches;
 
   /* Encabezado, menú y barra: nunca más de un botón de reservar a la vista */
   const nav = $('nav'), barra = $('barra'), reservar = $('reservar');
@@ -1972,7 +1972,7 @@ try { (() => {
   const sec = document.getElementById('portada');
   const vs = document.getElementById('v-sobre'), vc = document.getElementById('v-camilla');
   const saltar = document.getElementById('saltar');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = matchMedia('not all').matches;
   // En computadora (pantalla ancha) se usa la versión 16:9 si existe; si no, la vertical.
   const mqAncha = matchMedia('(min-width: 960px)');
   let ancha = mqAncha.matches;
@@ -2310,7 +2310,7 @@ try { (() => {
 // ---------- "Tu cuerpo habla": al llegar, cada parte entra en su turno (las frases giran solas, por CSS) ----------
 try { (() => {
   const cab = document.getElementById('escucha');
-  if (!cab || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!cab || matchMedia('not all').matches) return;
   cab.classList.add('prepara');
   let hecho = false;
   const entra = () => { if (hecho) return; hecho = true; cab.classList.add('e-entra'); removeEventListener('scroll', mira); };
@@ -2322,7 +2322,7 @@ try { (() => {
 // ---------- El recorrido: el hilo se llena de luz al bajar y enciende cada estación al llegar ----------
 try { (() => {
   const ruta = document.getElementById('ruta');
-  if (!ruta || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!ruta || matchMedia('not all').matches) return;
   const marco = document.getElementById('marco-sesion'), practica = document.getElementById('respira');
   const estaciones = [...ruta.querySelectorAll('.estacion, .guia-paso'), ...(practica ? [practica] : [])];
   ruta.classList.add('prepara'); document.querySelectorAll('.marco-sesion').forEach(m => m.classList.add('prepara'));
@@ -2362,7 +2362,7 @@ try { (() => {
   const notas = [...carril.querySelectorAll('.t-nota')], N = notas.length;
   if (N < 5) return;
   const seccion = carril.closest('.testimonios'), ant = document.getElementById('t-anterior'), sig = document.getElementById('t-siguiente');
-  const calma = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const calma = matchMedia('not all').matches;
   const giro = document.createElement('div'); giro.className = 'aro-giro';
   notas.forEach(n => giro.appendChild(n)); carril.appendChild(giro);
   carril.classList.add('aro'); seccion.classList.add('con-aro');
@@ -2535,7 +2535,7 @@ try { (() => {
 // ---------- Las cinco estrellas se encienden una tras otra la primera vez que se ven ----------
 try { (() => {
   const bloque = document.querySelector('.confianza.clara'), fila = bloque && bloque.querySelector('.estrellas');
-  if (!fila || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  if (!fila || matchMedia('not all').matches || !('IntersectionObserver' in window)) return;
   bloque.classList.add('espera');
   const ojo = new IntersectionObserver(es => {
     if (!es.some(e => e.isIntersecting)) return;
@@ -2552,7 +2552,7 @@ try { (() => {
   const hasta = +caja.dataset.hasta || 1000;
   const pinta = n => { el.textContent = '+' + Math.round(n).toLocaleString('en-US'); };
   pinta(hasta);
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  if (matchMedia('not all').matches || !('IntersectionObserver' in window)) return;
   const DURA = 900;
   let t0 = 0, reloj = 0;
   const paso = () => {
