@@ -1169,6 +1169,12 @@ html.intro .nav{opacity:0;pointer-events:none;transition:none}
    con impulso; al tocar un recorte, crece hasta abrirse completo. Sin script quedan en fila para deslizar. */
 .t-resena .r-pie{display:none}
 .testimonios{overflow-x:clip}
+/* Computadora: las disciplinas, "Hecha para ti" y la frase de cierre van centradas */
+@media (min-width:960px){
+  .tlt{text-align:center}
+  .tlt .tlt-texto, .tlt .disc-panel, .tlt .tlt-datos{margin-left:auto;margin-right:auto}
+  .tlt .disc-fichas{justify-content:center}
+}
 /* Computadora: el escrito sobre las tarjetas va centrado */
 @media (min-width:960px){
   .testimonios .titulo, .testimonios .antetitulo.t-bajo, .testimonios .ayuda-t{display:block;margin-left:auto;margin-right:auto;text-align:center}
