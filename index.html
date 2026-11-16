@@ -1367,6 +1367,34 @@ footer .lema{display:none}
     text-shadow:0 1px 1px rgba(110,70,20,.6);background:linear-gradient(135deg, #E9CF8E 0%, #CDA044 52%, #B98A34 100%);
     box-shadow:0 12px 26px -14px rgba(120,80,20,.8), inset 0 1px 0 rgba(255,255,255,.55)}
 }
+/* El menú del teléfono es un panel que entra por la derecha y queda al lado de la página, que se sigue viendo.
+   Se cierra con la equis, al elegir una sección o al tocar la página. */
+.hoja, .hoja[hidden]{display:flex !important;inset:0 0 0 auto;width:min(76vw, 320px);
+  padding:calc(env(safe-area-inset-top,0px) + 92px) 26px calc(env(safe-area-inset-bottom,0px) + 32px) 28px;
+  background:linear-gradient(180deg, rgba(251,246,237,.97) 0%, rgba(243,234,223,.97) 100%);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:28px 0 0 28px;
+  box-shadow:-18px 0 44px -22px rgba(60,36,10,.5), 0 0 0 100vmax rgba(40,26,12,.16);
+  transition:transform .42s cubic-bezier(.2,.7,.2,1), visibility .42s, box-shadow .42s ease}
+.hoja[hidden]{transform:translateX(104%);visibility:hidden;pointer-events:none;box-shadow:-18px 0 44px -22px rgba(60,36,10,0), 0 0 0 100vmax rgba(40,26,12,0)}
+.hoja nav{gap:2px}
+.hoja nav a{font-size:1.32rem;line-height:1.3;padding:14px 0;color:#8A5C14;border-bottom:1px solid rgba(190,150,97,.3)}
+.hoja nav a:last-child{border-bottom:0}
+.hoja .cerrar{right:22px}
+/* Los perfiles de Instagram y Facebook cierran el panel del menú */
+.hoja-redes{margin-top:auto;padding-top:22px;border-top:1px solid rgba(190,150,97,.3);display:flex;flex-direction:column;gap:14px}
+.hoja-redes a{display:flex;align-items:center;gap:12px;text-decoration:none;color:#8A5C14;font-weight:700;font-size:.98rem;line-height:1.25}
+.hoja-redes a span{display:block}
+.hoja-redes a small{display:block;font-weight:400;font-size:.78rem;letter-spacing:.02em;opacity:.85}
+.hoja-redes svg{flex:none;width:26px;height:26px}
+/* y en computadora van como dos iconos dentro de la cápsula */
+.nav-links .nl-red{display:none}
+@media (min-width:960px){
+  .nav .nav-links .nl-red{display:grid;place-items:center;width:36px;height:36px;padding:0}
+  .nav .nav-links .nl-red svg{width:17px;height:17px;filter:drop-shadow(0 1px 1px rgba(92,58,18,.5))}
+  .nav.vidrio .nav-links .nl-red svg{filter:none}
+  .nav .nav-links .nl-sep{display:block;width:1px;height:18px;margin:0 6px 0 4px;align-self:center;background:currentColor;opacity:.35}
+}
+.nav-links .nl-sep{display:none}
 /* Teléfono: al deslizar no queda franja ni logo acompañando el recorrido; solo el botón del menú */
 @media (max-width:959px){
   .nav.vidrio{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;pointer-events:none}
@@ -1410,6 +1438,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
       <a href="#presenta">La terapia</a>
       <a href="#ingrid">Drabarni</a>
       <a href="#testimonios">Testimonios</a>
+      <i class="nl-sep" aria-hidden="true"></i><a class="nl-red" href="https://www.instagram.com/ventana.alalma/" target="_blank" rel="noopener" aria-label="Instagram: @ventana.alalma"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.25" fill="currentColor"/></svg></a><a class="nl-red" href="https://www.facebook.com/share/1CKnufSXPy/" target="_blank" rel="noopener" aria-label="Facebook: Ventana al Alma"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-1.56 19.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 12 2Z"/></svg></a>
     </nav>
     <a class="btn btn-verde nav-reservar" href="#reservar">Reservar</a>
     <button class="menu-btn trazos" id="abrir-menu" aria-label="Abrir menú" aria-expanded="false" aria-controls="hoja"><span></span><span></span><span></span></button>
@@ -1425,6 +1454,7 @@ if (!(location.hash && location.hash !== '#inicio')) {
     
     <a href="#reservar">Reservar</a>
   </nav>
+  <div class="hoja-redes"><a href="https://www.instagram.com/ventana.alalma/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.9"/><circle cx="17.3" cy="6.7" r="1.25" fill="currentColor"/></svg><span>Instagram<small>@ventana.alalma</small></span></a><a href="https://www.facebook.com/share/1CKnufSXPy/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-1.56 19.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46H15.2c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 12 2Z"/></svg><span>Facebook<small>Ventana al Alma</small></span></a></div>
 </div>
 
 <main id="inicio">
@@ -1646,11 +1676,11 @@ if (!(location.hash && location.hash !== '#inicio')) {
         <div class="tarjeta respira oscura" id="respira">
         <div>
           <h3>¿Cuándo fue la última vez que respiraste profundo?</h3>
-          <p>Te dejo este recurso para cuando el día pese: tres respiraciones lentas, cuatro segundos para tomar aire y seis para soltarlo. <b>Hazlo aquí mismo, en el carro o antes de dormir.</b></p>
+          <p>Te dejo este recurso para cuando el día pese: cinco respiraciones lentas, cuatro segundos para tomar aire y seis para soltarlo. Menos de un minuto. <b>Hazlo aquí mismo, en el carro o antes de dormir.</b></p>
         </div>
         <div class="respiro">
           <div class="orbe" id="orbe"><span class="disco" id="disco"></span><span class="txt"><span class="fase" id="fase">Cuando quieras</span><span class="seg" id="seg"></span></span></div>
-          <div class="ciclos" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+          <div class="ciclos" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
           <button class="btn btn-crema" id="respirar">Respira conmigo</button>
           <p class="respiro-final" id="respiro-final" aria-live="polite"></p>
         </div>
@@ -1895,7 +1925,8 @@ if (!(location.hash && location.hash !== '#inicio')) {
   const cuenta = ms => { const s = Math.round(ms / 1000); for (let k = 0; k < s; k++) timers.push(setTimeout(() => { seg.textContent = `${s - k}`; }, k * 1000)); };
   const ciclo = k => {
     if (!activo) return;
-    if (k === 3) return parar(true);
+    if (k === 5) return parar(true);
+    fin.textContent = ['Llega. Solo esta respiración.', 'Suelta los hombros.', 'Afloja la mandíbula y la frente.', 'Deja que el aire baje hasta el vientre.', 'Quédate aquí un momento.'][k];
     fase.textContent = 'Toma aire'; cuenta(4000);
     anims.push(disco.animate([{transform: 'scale(.6)'}, {transform: 'scale(1)'}], {duration: reduce ? 1 : 4000, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards'}));
     anims.push(barras[k].animate([{transform: 'scaleX(0)'}, {transform: 'scaleX(1)'}], {duration: 10000, easing: 'linear', fill: 'forwards'}));
@@ -1929,6 +1960,12 @@ if (!(location.hash && location.hash !== '#inicio')) {
 
   // Las barras del navegador quedan claras, con el tono de la página (sin línea ni franja dorada arriba)
   { const tema = document.querySelector('meta[name="theme-color"]'); if (tema) tema.setAttribute('content', '#F3EADF'); }
+  { const hoja = document.getElementById('hoja'), abre = document.getElementById('abrir-menu');   // el panel del menú se cierra al tocar la página
+    if (hoja && abre) {
+      const fuera = e => { if (!hoja.hidden && !hoja.contains(e.target) && !abre.contains(e.target)) { hoja.hidden = true; abre.setAttribute('aria-expanded', 'false'); } };
+      document.addEventListener('click', fuera); addEventListener('scroll', () => { if (!hoja.hidden) { hoja.hidden = true; abre.setAttribute('aria-expanded', 'false'); } }, {passive: true});
+      addEventListener('keydown', e => { if (e.key === 'Escape' && !hoja.hidden) { hoja.hidden = true; abre.setAttribute('aria-expanded', 'false'); } });
+    } }
   const invita = document.getElementById('seguir');   // la invitación a bajar se desvanece al empezar a bajar
   addEventListener('scroll', () => invita.classList.toggle('ido', scrollY > 40), {passive: true});
   { const barra = document.getElementById('nav');   // en computadora el menú se queda solo en la portada
